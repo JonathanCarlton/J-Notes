@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadHTMLTable([]);
 });
 
+// add btn 
 const addBtn = document.querySelector("#add-note-btn");
 
 addBtn.addEventListener("click", () => {
@@ -29,6 +30,46 @@ addBtn.addEventListener("click", () => {
     .then(data => insertRowIntoTable(data));
 });
 
+document.querySelector('table tbody').addEventListener('click', (event) => {
+    if (event.target.className === "delete-row-btn") {
+        
+        // get index of row that contains the target button
+        const noteId = event.target.getAttribute('data-id');
+        const table = document.querySelector('table tbody');
+        const targetRowIndex = (event.target.closest("tr").rowIndex - 1);
+
+        fetch(`http://localhost:5000/notes/${noteId}`, {
+            headers: {
+                'content-type': 'application/json'
+            },
+            method: 'DELETE',
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success){
+                // after successful deletion, remove row from front end table
+                table.deleteRow(targetRowIndex);
+            }
+        });
+    }
+    if (event.target.className === "edit-row-btn") {
+
+    }
+})
+
+document.querySelectorAll('.delete-row-btn').forEach(element=>{
+    element.onclick = function(){
+        const noteId = deleteBtn.getAttribute('data-id')
+        fetch(`http://localhost:5000/notes/${noteId}`, {
+            headers: {
+                'content-type': 'application/json'
+            },
+            method: 'DELETE',
+        })
+        .then(res => res.json())
+        .then(data => removeTableRows(data));
+    }
+})
 
 
 // Helper Functions
