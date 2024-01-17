@@ -8,19 +8,8 @@ dotenv.config();
 //middleware
 app.use(cors());
 app.use(express.json());
-// app.use(express.urlencoded({extended: false}))
 
 // functions 
-function getDate() {
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
-
-    var current_date = mm + '/' + dd + '/' + yyyy;
-    return current_date;
-}
-
 
 // create a note
 app.post('/notes', async (req, res) => {
