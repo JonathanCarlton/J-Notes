@@ -31,7 +31,7 @@ app.post('/notes', async (req, res) => {
 // get all notes
 app.get('/notes', async(req, res) => {
     try {
-        const allNotes = await pool.query("SELECT * FROM notes");
+        const allNotes = await pool.query("SELECT * FROM notes ORDER BY notes_id ASC");
         res.json(allNotes.rows)
     } catch (err) {
         console.error(err.message);
@@ -58,7 +58,7 @@ app.put("/notes/:id", async (req, res) => {
         const updateNote = await pool.query("UPDATE notes SET description = $1 WHERE notes_id = $2", 
             [description, id] 
         );
-        res.json("Note updated!")
+        res.json({"success": true})
     } catch (err) {
         console.error(err.message);
     }
@@ -71,7 +71,7 @@ app.delete("/notes/:id", async (req, res) => {
         const deleteNote = await pool.query("DELETE FROM notes WHERE notes_id = $1", 
             [id] 
         );
-        res.json("Note deleted!")
+        res.json({"success": true})
     } catch (err) {
         console.error(err.message);
     }

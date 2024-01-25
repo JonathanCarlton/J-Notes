@@ -1,14 +1,10 @@
 // Event handlers
 
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('http://localhost:5000/notes').then(
-        res => res.json()
-    ).then(
-        data => loadHTMLTable(data)
-    );
-    loadHTMLTable([]);
+    loadTableRows();
 });
 
+// add btn 
 const addBtn = document.querySelector("#add-note-btn");
 
 addBtn.addEventListener("click", () => {
@@ -29,9 +25,87 @@ addBtn.addEventListener("click", () => {
     .then(data => insertRowIntoTable(data));
 });
 
+//edit button
+const editBtn = document.querySelector("#edit-row-btn");
+let editSection = document.querySelector("#edit-row");
+let editTextField = document.querySelector("#edit-name-input");
 
+editBtn.addEventListener("click", () => {
+    const noteId = editBtn.value;
+
+    fetch(`http://localhost:5000/notes/${noteId}`, {
+        headers: {
+            'content-type': 'application/json'
+        },
+        method: 'PUT',
+        body: JSON.stringify({
+            'description': editTextField.value
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success){
+            // clear value of btn
+            editBtn.value = "";
+            // clear value of field
+            editTextField.value = "";
+            // hide edit field
+            editSection.hidden = true;
+            // after successful Edit, redraw table
+            loadTableRows();
+        }
+    });
+});
+
+document.querySelector('table tbody').addEventListener('click', (event) => {
+    if (event.target.className === "delete-row-btn") {
+        
+        // get index of row that contains the target button
+        const noteId = event.target.getAttribute('data-id');
+        const table = document.querySelector('table tbody');
+        const targetRowIndex = (event.target.closest("tr").rowIndex - 1);
+
+        fetch(`http://localhost:5000/notes/${noteId}`, {
+            headers: {
+                'content-type': 'application/json'
+            },
+            method: 'DELETE',
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success){
+                // after successful deletion, remove row from front end table
+                table.deleteRow(targetRowIndex);
+            }
+        });
+    }
+    if (event.target.className === "edit-row-btn") {
+
+        // get index of row that contains the target button
+        const noteId = event.target.getAttribute('data-id');
+        const table = document.querySelector('table tbody');
+        const targetRowIndex = (event.target.closest("tr").rowIndex - 1);
+
+        let targetDescription = table.rows[targetRowIndex].cells[1].innerHTML;
+        
+        // populate the edit text field with content of corresponding note
+
+        editTextField.value = targetDescription;
+        editSection.hidden = false;
+        editBtn.value = noteId;
+    }
+})
 
 // Helper Functions
+function loadTableRows(){
+    fetch('http://localhost:5000/notes').then(
+        res => res.json()
+    ).then(
+        data => loadHTMLTable(data)
+    );
+    loadHTMLTable([]);
+}
+
 
 function addTableRows(data) {
     var tableHtml = "";
