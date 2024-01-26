@@ -18,7 +18,7 @@ addBtn.addEventListener("click", () => {
         },
         method: 'POST',
         body: JSON.stringify({
-            'description': noteValue
+            'note_content': noteValue
         })
     })
     .then(res => res.json())
@@ -39,7 +39,7 @@ editBtn.addEventListener("click", () => {
         },
         method: 'PUT',
         body: JSON.stringify({
-            'description': editTextField.value
+            'note_content': editTextField.value
         })
     })
     .then(res => res.json())
@@ -86,11 +86,11 @@ document.querySelector('table tbody').addEventListener('click', (event) => {
         const table = document.querySelector('table tbody');
         const targetRowIndex = (event.target.closest("tr").rowIndex - 1);
 
-        let targetDescription = table.rows[targetRowIndex].cells[1].innerHTML;
+        let targetNoteContent = table.rows[targetRowIndex].cells[1].innerHTML;
         
         // populate the edit text field with content of corresponding note
 
-        editTextField.value = targetDescription;
+        editTextField.value = targetNoteContent;
         editSection.hidden = false;
         editBtn.value = noteId;
     }
@@ -112,8 +112,8 @@ function addTableRows(data) {
 
     tableHtml += "<tr>";
     tableHtml += `<td>${data.notes_id}</td>`;
-    tableHtml += `<td>${data.description}</td>`;
-    tableHtml += `<td>${new Date(data.date_added).toLocaleString()}</td>`;
+    tableHtml += `<td>${data.note_content}</td>`;
+    tableHtml += `<td>${new Date(data.date_created).toLocaleString()}</td>`;
     tableHtml += `<td><button class="delete-row-btn" data-id=${data.notes_id}>Delete</button></td>`;
     tableHtml += `<td><button class="edit-row-btn" data-id=${data.notes_id}>Edit</button></td>`;
     tableHtml += "</tr>";

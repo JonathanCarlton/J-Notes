@@ -14,12 +14,12 @@ app.use(express.json());
 // create a note
 app.post('/notes', async (req, res) => {
     try {
-        const {description} = req.body;
+        const {note_content} = req.body;
         var current_date = new Date();
         console.log(current_date);
         const newNote = await pool.query(
-            "INSERT INTO notes (description, date_added) VALUES($1, $2) RETURNING *", 
-            [description, current_date]
+            "INSERT INTO notes (note_content, date_created) VALUES($1, $2) RETURNING *", 
+            [note_content, current_date]
         );
 
         res.json(newNote.rows[0]);
@@ -54,9 +54,9 @@ app.get('/notes/:id', async (req, res) => {
 app.put("/notes/:id", async (req, res) => {
     try {
         const { id } = req.params;
-        const { description } = req.body;
-        const updateNote = await pool.query("UPDATE notes SET description = $1 WHERE notes_id = $2", 
-            [description, id] 
+        const { note_content } = req.body;
+        const updateNote = await pool.query("UPDATE notes SET note_content = $1 WHERE notes_id = $2", 
+            [note_content, id] 
         );
         res.json({"success": true})
     } catch (err) {
