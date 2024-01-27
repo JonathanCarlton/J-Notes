@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>J-Notes - All Notes</title>
+</head>
+<body>
+    <main>
+        <label for="">Note:</label>
+        <input type="text" id="note-input">
+        <button id="add-note-btn">Add Note</button>
+
+        <br><br><br>
+        <div>
+            <input type="text" name="search" id="search-input" placeholder="search by name">
+            <button type="submit" id="search-btn">Search</button>
+        </div>
+
+        <table id="table">
+            <thead>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Date Added</th>
+                <th>Delete</th>
+                <th>Edit</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+        
+        <!-- Section for editing a note -->
+        <section id="edit-row" hidden>
+            <label for="edit-name-input">Name:</label>
+            <input type="text" id="edit-name-input">
+            <button id="edit-row-btn">Update</button>
+        </section>
+    </main>
+    <script src="./scripts/index.js"></script>
+</body>
+</html>

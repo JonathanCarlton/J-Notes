@@ -4,38 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
-    <title>J-Notes - All Notes</title>
+    <title>J-Notes - Home</title>
 </head>
 <body>
-    <main>
-        <label for="">Note:</label>
-        <input type="text" id="note-input">
-        <button id="add-note-btn">Add Note</button>
-
-        <br><br><br>
+    <header>
+        <h1>J-Notes</h1>
+    </header>
+    <nav>
+        <a href="notes.html"><button>View All Notes</button></a>
+        <button>Quick Note</button>
+        <button>View Random Note</button>
+    </nav>
+    <section id="quick-note">
         <div>
-            <input type="text" name="search" id="search-input" placeholder="search by name">
-            <button type="submit" id="search-btn">Search</button>
-        </div>
+            <!-- this section will contain the information for the quick note, will need a form-->
+            <form action="">
+                <!-- title -->
+                <label for="note-title"></label>
+                <input type="text" name="note-title" id="note-title">
 
-        <table id="table">
-            <thead>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Date Added</th>
-                <th>Delete</th>
-                <th>Edit</th>
-            </thead>
-            <tbody></tbody>
-        </table>
-        
-        <!-- Section for editing a note -->
-        <section id="edit-row" hidden>
-            <label for="edit-name-input">Name:</label>
-            <input type="text" id="edit-name-input">
-            <button id="edit-row-btn">Update</button>
-        </section>
-    </main>
-    <script src="./scripts/index.js"></script>
+                <!-- Note -->
+                <label for="note-content">Note:</label>
+                <textarea name="note-content" id="note-content" cols="30" rows="10"></textarea>
+
+                <!-- submit button -->
+                <button type="submit">submit</button>
+
+
+            </form>
+        </div>
+    </section>
+    <section id="random-note">
+        <!-- this section will be used for viewing a random note -->
+
+    </section>
+    <footer>
+        <p>Jonathan Carlton 2024</p>
+    </footer>
+    
 </body>
 </html>
